@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S & B Auto Detailing — Showroom Shine, Every Time</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─── RESET ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    /* ─── TOKENS ─────────────────────────────────── */
+    :root {
+      --navy:        #1B3A5C;
+      --navy-mid:    #2C5F8A;
+      --blue:        #3D9BE0;
+      --blue-light:  #7EC3F0;
+      --silver:      #C8CDD2;
+      --silver-lt:   #EDEFF1;
+      --charcoal:    #15191E;
+      --surface:     #1a1f27;
+      --surface-2:   rgba(255,255,255,0.03);
+      --gold:        #D4A843;
+      --white:       #FFFFFF;
+
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+
+      --font-h: 'Oswald', sans-serif;
+      --font-b: 'Inter', sans-serif;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--charcoal);
+      color: var(--silver-lt);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── UTILITIES ─────────────────────────────── */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    /* Scroll reveal classes */
+    .rv       { opacity: 0; transform: translateY(50px);                                                              transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
+    .rv-l     { opacity: 0; transform: translateX(-60px);                                                             transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
+    .rv-r     { opacity: 0; transform: translateX(60px);                                                              transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
+    .rv-3d    { opacity: 0; transform: perspective(900px) rotateX(-22deg) translateY(50px);                           transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); }
+    .rv-scale { opacity: 0; transform: scale(0.88);                                                                   transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+    .on { opacity: 1 !important; transform: none !important; }
+
+    .d1 { transition-delay: .1s !important; }
+    .d2 { transition-delay: .2s !important; }
+    .d3 { transition-delay: .3s !important; }
+    .d4 { transition-delay: .4s !important; }
+    .d5 { transition-delay: .5s !important; }
+    .d6 { transition-delay: .6s !important; }
+
+    /* ─── NAV ───────────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.25rem 0;
+      transition: background .4s ease, box-shadow .4s ease, padding .4s ease, border-color .4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.stuck {
+      background: rgba(21,25,30,.88);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 1px 0 rgba(61,155,224,.12), 0 8px 32px rgba(0,0,0,.35);
+      border-color: rgba(61,155,224,.08);
+      padding: .75rem 0;
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: .75rem;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .nav-logo-badge {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: conic-gradient(from 0deg, #1B3A5C, #3D9BE0, #7EC3F0, #3D9BE0, #1B3A5C);
+      padding: 2px; flex-shrink: 0;
+    }
+    .nav-logo-inner {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: var(--charcoal); display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .nav-logo-inner svg { width: 100%; height: 100%; border-radius: 50%; }
+    .nav-brand {
+      font-family: var(--font-h); font-size: 1.05rem; font-weight: 700;
+      color: var(--white); letter-spacing: .04em; line-height: 1.2;
+    }
+    .nav-brand small {
+      display: block; font-size: .6rem; font-weight: 400;
+      letter-spacing: .14em; color: var(--blue-light); text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: .875rem; font-weight: 500; color: rgba(200,205,210,.75);
+      text-decoration: none; letter-spacing: .03em; position: relative;
+      transition: color .2s ease;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--blue);
+      transform: scaleX(0); transition: transform .3s var(--ease-spring);
+    }
+    .nav-links a:hover        { color: var(--white); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .6rem 1.4rem; border-radius: 100px; border: none;
+      background: var(--blue); color: var(--white);
+      font-family: var(--font-h); font-size: .9rem; font-weight: 600; letter-spacing: .06em;
+      text-decoration: none; cursor: pointer;
+      transition: background .2s ease, transform .2s var(--ease-spring), box-shadow .2s ease;
+      box-shadow: 0 0 0 0 rgba(61,155,224,.4);
+    }
+    .nav-cta:hover { background: #5bb1f0; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(61,155,224,.4); }
+    .nav-cta:active { transform: translateY(0); }
+    .nav-cta:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 3px; }
+
+    /* Hamburger */
+    .nav-ham {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: .5rem;
+    }
+    .nav-ham span {
+      display: block; width: 24px; height: 2px; background: var(--silver-lt);
+      transition: transform .3s ease, opacity .3s ease;
+    }
+    .nav-ham.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-ham.open span:nth-child(2) { opacity: 0; }
+    .nav-ham.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile fullscreen menu */
+    #mob-menu {
+      position: fixed; inset: 0; z-index: 99;
+      background: rgba(21,25,30,.97); backdrop-filter: blur(20px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    #mob-menu.open { opacity: 1; pointer-events: all; }
+    #mob-menu a {
+      font-family: var(--font-h); font-size: 2rem; font-weight: 700;
+      color: var(--silver-lt); text-decoration: none; letter-spacing: .04em;
+      transition: color .2s ease;
+    }
+    #mob-menu a:hover { color: var(--blue); }
+
+    /* ─── HERO ──────────────────────────────────── */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; background: var(--charcoal);
+    }
+    /* Parallax layer 1 — deep background */
+    .hero-depth-1 {
+      position: absolute; inset: -25%; z-index: 0; will-change: transform;
+      background:
+        radial-gradient(ellipse 90% 70% at 15% 25%, rgba(44,95,138,.45) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 60% at 85% 75%, rgba(27,58,92,.55) 0%, transparent 55%),
+        radial-gradient(ellipse 120% 100% at 50% 50%, rgba(61,155,224,.06) 0%, transparent 75%);
+    }
+    /* Parallax layer 2 — grid */
+    .hero-depth-2 {
+      position: absolute; inset: 0; z-index: 1; will-change: transform;
+      background-image:
+        linear-gradient(rgba(61,155,224,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61,155,224,.045) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+    /* Parallax layer 3 — orbs */
+    .hero-orb {
+      position: absolute; border-radius: 50%; z-index: 2; will-change: transform;
+      animation: orb-float 9s ease-in-out infinite;
+    }
+    .hero-orb-a {
+      width: 580px; height: 580px; top: -120px; left: -100px;
+      background: radial-gradient(circle, rgba(61,155,224,.14) 0%, transparent 70%);
+      animation-duration: 9s;
+    }
+    .hero-orb-b {
+      width: 420px; height: 420px; bottom: -60px; right: -60px;
+      background: radial-gradient(circle, rgba(44,95,138,.18) 0%, transparent 70%);
+      animation-duration: 12s; animation-direction: reverse;
+    }
+    .hero-orb-c {
+      width: 200px; height: 200px; top: 30%; right: 15%;
+      background: radial-gradient(circle, rgba(61,155,224,.1) 0%, transparent 70%);
+      animation-duration: 7s; animation-delay: -3s;
+    }
+    @keyframes orb-float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%       { transform: translate(25px, -18px) scale(1.05); }
+      66%       { transform: translate(-12px, 18px) scale(.97); }
+    }
+    /* Grain overlay */
+    .hero-grain {
+      position: absolute; inset: 0; z-index: 3; opacity: .025; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* Hero content */
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center; padding: 9rem 2rem 5rem;
+      max-width: 860px;
+    }
+    /* Logo badge */
+    .hero-logo-wrap { display: flex; justify-content: center; margin-bottom: 2.5rem; }
+    .hero-logo-ring {
+      width: 160px; height: 160px; border-radius: 50%;
+      background: conic-gradient(from 30deg, #0f1c2e, #1B3A5C, #2C5F8A, #3D9BE0, #7EC3F0, #3D9BE0, #2C5F8A, #1B3A5C, #0f1c2e);
+      padding: 4px;
+      box-shadow: 0 0 40px rgba(61,155,224,.5), 0 0 80px rgba(61,155,224,.2);
+      animation: logo-float 6s ease-in-out infinite;
+    }
+    .hero-logo-face {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: linear-gradient(145deg, #1a1f27 0%, #0d1117 100%);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .hero-logo-face svg { width: 100%; height: 100%; border-radius: 50%; }
+    @keyframes logo-float {
+      0%, 100% { transform: translateY(0) rotate(0deg);   box-shadow: 0 0 40px rgba(61,155,224,.5), 0 0 80px rgba(61,155,224,.18); }
+      50%       { transform: translateY(-12px) rotate(3deg); box-shadow: 0 28px 70px rgba(61,155,224,.65), 0 0 120px rgba(61,155,224,.28); }
+    }
+
+    .hero-tag {
+      display: inline-block; font-size: .7rem; font-weight: 600; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--blue);
+      background: rgba(61,155,224,.1); border: 1px solid rgba(61,155,224,.2);
+      border-radius: 100px; padding: .35rem .875rem; margin-bottom: 1.25rem;
+    }
+    .hero-h1 {
+      font-family: var(--font-h); font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700; line-height: 1.04; letter-spacing: -.02em;
+      color: var(--white); margin-bottom: 1.25rem;
+    }
+    .hero-h1 .grad {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--silver); max-width: 500px;
+      margin: 0 auto 2.5rem; line-height: 1.75;
+    }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      z-index: 10; display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: rgba(200,205,210,.5);
+      animation: scroll-bounce 2.2s ease-in-out infinite;
+    }
+    .scroll-indicator span { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; }
+    @keyframes scroll-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(7px); }
+    }
+
+    /* ─── BUTTONS ────────────────────────────────── */
+    .btn-p {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .875rem 2rem; border-radius: 100px; border: none;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--navy-mid) 100%);
+      color: var(--white); font-family: var(--font-h); font-size: 1rem; font-weight: 600;
+      letter-spacing: .06em; text-decoration: none; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(61,155,224,.38);
+      transition: transform .2s var(--ease-spring), box-shadow .2s ease;
+    }
+    .btn-p:hover       { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 40px rgba(61,155,224,.52); }
+    .btn-p:active      { transform: translateY(-1px); }
+    .btn-p:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 4px; }
+
+    .btn-g {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .875rem 2rem; border-radius: 100px;
+      background: transparent; color: var(--silver-lt);
+      font-family: var(--font-h); font-size: 1rem; font-weight: 600; letter-spacing: .06em;
+      text-decoration: none; cursor: pointer;
+      border: 1.5px solid rgba(200,205,210,.22);
+      transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s var(--ease-spring);
+    }
+    .btn-g:hover       { background: rgba(255,255,255,.05); border-color: rgba(61,155,224,.45); color: var(--white); transform: translateY(-2px); }
+    .btn-g:active      { transform: translateY(0); }
+    .btn-g:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
+
+    /* ─── SECTION COMMON ─────────────────────────── */
+    .section-tag {
+      display: inline-block; font-size: .7rem; font-weight: 600; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--blue);
+      background: rgba(61,155,224,.1); border: 1px solid rgba(61,155,224,.2);
+      border-radius: 100px; padding: .35rem .875rem; margin-bottom: 1.1rem;
+    }
+    .section-h { font-family: var(--font-h); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--white); letter-spacing: -.02em; line-height: 1.1; margin-bottom: .875rem; }
+    .section-p { font-size: .975rem; color: var(--silver); line-height: 1.7; }
+    .hline {
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(61,155,224,.3), transparent);
+    }
+
+    /* ─── TRUST / WHY US ─────────────────────────── */
+    #why {
+      background: var(--charcoal); padding: 6rem 2rem;
+      position: relative;
+    }
+    .why-inner { max-width: 1100px; margin: 0 auto; }
+    .why-header { text-align: center; margin-bottom: 3.5rem; }
+    .trust-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.75rem; }
+    .trust-card {
+      background: var(--surface-2); border: 1px solid rgba(61,155,224,.1);
+      border-radius: 20px; padding: 2.5rem 2rem; text-align: center;
+      transform-style: preserve-3d; cursor: default;
+      transition: background .3s ease, border-color .3s ease, box-shadow .3s ease;
+    }
+    .trust-card:hover {
+      background: rgba(61,155,224,.07);
+      border-color: rgba(61,155,224,.28);
+      box-shadow: 0 8px 40px rgba(61,155,224,.1);
+    }
+    .trust-icon {
+      width: 62px; height: 62px; margin: 0 auto 1.4rem;
+      background: linear-gradient(135deg, rgba(61,155,224,.15), rgba(44,95,138,.15));
+      border: 1px solid rgba(61,155,224,.18); border-radius: 16px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.65rem;
+    }
+    .trust-h { font-family: var(--font-h); font-size: 1.2rem; font-weight: 600; color: var(--white); letter-spacing: .03em; margin-bottom: .6rem; }
+    .trust-p { font-size: .875rem; color: var(--silver); line-height: 1.65; }
+
+    /* ─── STATS BAR ─────────────────────────────── */
+    #stats {
+      background: var(--surface); padding: 3rem 2rem;
+      position: relative; overflow: hidden;
+      border-top: 1px solid rgba(61,155,224,.08);
+      border-bottom: 1px solid rgba(61,155,224,.08);
+    }
+    #stats::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 80% 100% at 50% 50%, rgba(61,155,224,.06), transparent);
+    }
+    .stats-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-around; gap: 2rem; flex-wrap: wrap; position: relative; z-index: 1; }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: var(--font-h); font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 700;
+      color: var(--white); letter-spacing: -.02em; line-height: 1;
+      background: linear-gradient(135deg, var(--white) 0%, var(--blue-light) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-lbl { font-size: .8rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--silver); margin-top: .3rem; }
+    .stat-sep { width: 1px; height: 48px; background: rgba(61,155,224,.15); }
+
+    /* ─── SERVICE BUILDER ────────────────────────── */
+    #services {
+      background: linear-gradient(180deg, var(--charcoal) 0%, #0d1117 100%);
+      padding: 6rem 2rem 5rem; position: relative;
+    }
+    .svc-header { text-align: center; max-width: 620px; margin: 0 auto 4rem; }
+    .builder { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 360px; gap: 2.5rem; align-items: start; }
+
+    /* Group */
+    .svc-group { margin-bottom: 2.75rem; }
+    .svc-group-head {
+      display: flex; align-items: center; gap: .65rem;
+      font-family: var(--font-h); font-size: .9rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--silver);
+      padding-bottom: .65rem; margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(200,205,210,.1);
+    }
+    .badge-gold {
+      font-size: .6rem; font-weight: 700; letter-spacing: .12em;
+      color: var(--charcoal); background: var(--gold); border-radius: 100px;
+      padding: .18rem .65rem;
+    }
+
+    /* Service cards grid */
+    .svc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px,1fr)); gap: .875rem; }
+    .svc-grid.addons { grid-template-columns: repeat(auto-fill, minmax(170px,1fr)); }
+
+    /* Service card */
+    .svc-card {
+      position: relative; background: var(--surface-2);
+      border: 1.5px solid rgba(200,205,210,.09); border-radius: 14px;
+      padding: 1.2rem; cursor: pointer; user-select: none;
+      transform-style: preserve-3d;
+      transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .svc-card:hover { background: rgba(61,155,224,.06); border-color: rgba(61,155,224,.22); }
+    .svc-card:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .svc-card.active {
+      background: rgba(61,155,224,.11); border-color: var(--blue);
+      box-shadow: 0 0 20px rgba(61,155,224,.22), inset 0 0 18px rgba(61,155,224,.05);
+    }
+
+    .svc-check {
+      position: absolute; top: .85rem; right: .85rem;
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 1.5px solid rgba(200,205,210,.25); background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s ease, border-color .2s ease, transform .2s var(--ease-spring);
+    }
+    .svc-card.active .svc-check { background: var(--blue); border-color: var(--blue); transform: scale(1.1); }
+    .svc-tick { opacity: 0; transform: scale(0); color: #fff; font-size: .65rem; font-weight: 700; transition: opacity .2s ease, transform .2s var(--ease-spring); }
+    .svc-card.active .svc-tick { opacity: 1; transform: scale(1); }
+
+    .svc-name { font-family: var(--font-h); font-size: .92rem; font-weight: 600; color: var(--white); letter-spacing: .02em; padding-right: 1.6rem; margin-bottom: .3rem; }
+    .svc-desc { font-size: .75rem; color: var(--silver); line-height: 1.5; margin-bottom: .7rem; }
+    .svc-price { font-family: var(--font-h); font-size: 1.1rem; font-weight: 700; color: var(--blue-light); }
+    .svc-card.active .svc-price { color: var(--blue); }
+
+    /* Protection time badge */
+    .svc-protect { display: inline-block; font-size: .6rem; font-weight: 600; letter-spacing: .08em; color: var(--gold); background: rgba(212,168,67,.1); border: 1px solid rgba(212,168,67,.2); border-radius: 100px; padding: .14rem .55rem; margin-bottom: .45rem; }
+
+    /* Vehicle type segmented control */
+    .vtype-wrap { margin-bottom: 2rem; }
+    .vtype-lbl { font-family: var(--font-h); font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--silver); margin-bottom: .55rem; }
+    .vtype-seg { display: inline-flex; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(200,205,210,.1); padding: .25rem; gap: .2rem; }
+    .vtype-btn { padding: .48rem 1rem; border-radius: 9px; border: none; cursor: pointer; font-family: var(--font-h); font-size: .8rem; font-weight: 600; letter-spacing: .04em; color: var(--silver); background: transparent; transition: background .2s ease, color .2s ease, box-shadow .2s ease; }
+    .vtype-btn.active { background: var(--blue); color: var(--white); box-shadow: 0 2px 8px rgba(61,155,224,.3); }
+    .vtype-btn:hover:not(.active) { color: var(--white); background: rgba(255,255,255,.07); }
+    .vtype-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    /* Time select dropdown */
+    select.fi { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237EC3F0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .75rem center; padding-right: 2.5rem; cursor: pointer; }
+    select.fi:disabled { opacity: .35; cursor: not-allowed; }
+    select.fi option { background: #1a1f27; color: var(--silver-lt); }
+
+    /* ─── STICKY SUMMARY ─────────────────────────── */
+    .summary-panel {
+      position: sticky; top: 96px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(61,155,224,.14); border-radius: 20px;
+      padding: 1.75rem; backdrop-filter: blur(12px);
+      box-shadow: 0 8px 40px rgba(0,0,0,.3), 0 0 1px rgba(61,155,224,.18);
+    }
+    .sm-title {
+      font-family: var(--font-h); font-size: .8rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--silver);
+      padding-bottom: .75rem; margin-bottom: 1.1rem;
+      border-bottom: 1px solid rgba(200,205,210,.07);
+    }
+    .sm-items { min-height: 72px; margin-bottom: 1.1rem; }
+    .sm-empty { font-size: .82rem; color: rgba(200,205,210,.38); font-style: italic; text-align: center; padding: .875rem 0; }
+    .sm-item {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .82rem; padding: .45rem 0; border-bottom: 1px solid rgba(200,205,210,.06);
+      animation: slide-in-item .3s var(--ease-spring);
+    }
+    @keyframes slide-in-item { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+    .sm-item-name { color: var(--silver-lt); flex: 1; margin-right: .5rem; }
+    .sm-item-price { color: var(--blue-light); font-weight: 600; white-space: nowrap; }
+    .sm-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(61,155,224,.28), transparent); margin: .875rem 0; }
+    .sm-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; }
+    .sm-total-lbl { font-family: var(--font-h); font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--silver); }
+    .sm-total-amt { font-family: var(--font-h); font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .sm-total-amt .sym { font-size: 1.1rem; color: var(--blue-light); vertical-align: super; }
+    .price-note { font-size: .73rem; color: rgba(200,205,210,.48); line-height: 1.55; background: rgba(255,255,255,.02); border-left: 2px solid rgba(61,155,224,.2); padding: .65rem .875rem; border-radius: 0 8px 8px 0; margin-bottom: 1.4rem; }
+
+    /* ─── FORM ───────────────────────────────────── */
+    .form-title { font-family: var(--font-h); font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--silver); margin-bottom: .875rem; }
+    .fg { margin-bottom: .8rem; }
+    .fl { display: block; font-size: .72rem; font-weight: 500; color: var(--silver); letter-spacing: .04em; margin-bottom: .3rem; }
+    .fi, .fta {
+      width: 100%; padding: .575rem .8rem; border-radius: 10px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(200,205,210,.14);
+      color: var(--silver-lt); font-family: var(--font-b); font-size: .85rem;
+      outline: none;
+      transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .fi::placeholder, .fta::placeholder { color: rgba(200,205,210,.28); }
+    .fi:focus, .fta:focus { border-color: var(--blue); background: rgba(61,155,224,.05); box-shadow: 0 0 0 3px rgba(61,155,224,.12); }
+    .fta { resize: vertical; min-height: 72px; }
+    .frow { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+    .btn-submit {
+      width: 100%; padding: .925rem; border-radius: 12px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--navy-mid) 100%);
+      color: var(--white); font-family: var(--font-h); font-size: .95rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      box-shadow: 0 4px 20px rgba(61,155,224,.32); margin-top: .4rem;
+      transition: transform .2s var(--ease-spring), box-shadow .2s ease, opacity .2s ease;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(61,155,224,.48); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 3px; }
+    .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .f-err {
+      display: none; font-size: .78rem; color: #f87171; margin-bottom: .7rem;
+      padding: .45rem .75rem; background: rgba(248,113,113,.1);
+      border: 1px solid rgba(248,113,113,.2); border-radius: 8px;
+    }
+    .f-hint { font-size: .7rem; color: rgba(200,205,210,.38); text-align: center; margin-top: .65rem; line-height: 1.5; }
+
+    /* Success */
+    .success-wrap { display: none; text-align: center; padding: 1.5rem 0; animation: pop-in .5s var(--ease-spring); }
+    @keyframes pop-in { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
+    .success-wrap.show { display: block; }
+    .success-icon { font-size: 2.75rem; margin-bottom: .875rem; }
+    .success-wrap h3 { font-family: var(--font-h); font-size: 1.2rem; font-weight: 600; color: var(--white); margin-bottom: .5rem; }
+    .success-wrap p { font-size: .875rem; color: var(--silver); }
+
+    /* ─── MOBILE STICKY BAR ───────────────────────── */
+    #mob-bar {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      background: rgba(21,25,30,.96); backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(61,155,224,.18);
+      box-shadow: 0 -8px 40px rgba(0,0,0,.4);
+    }
+    .mob-bar-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem; cursor: pointer;
+    }
+    .mob-bar-left { display: flex; flex-direction: column; gap: .1rem; }
+    .mob-bar-lbl { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--silver); }
+    .mob-bar-cnt { font-size: .75rem; color: rgba(200,205,210,.45); }
+    .mob-bar-tot { font-family: var(--font-h); font-size: 1.5rem; font-weight: 700; color: var(--blue-light); }
+    .mob-bar-chevron { font-size: .8rem; color: var(--silver); transition: transform .3s ease; }
+    #mob-bar.open .mob-bar-chevron { transform: rotate(180deg); }
+    .mob-panel { max-height: 0; overflow: hidden; transition: max-height .4s var(--ease-out); }
+    #mob-bar.open .mob-panel { max-height: 82vh; overflow-y: auto; }
+    .mob-panel-inner { padding: .5rem 1.5rem 1.5rem; }
+
+    /* ─── FOOTER ─────────────────────────────────── */
+    #footer { background: #0d1117; padding: 4.5rem 2rem 2rem; position: relative; }
+    .ft-inner { max-width: 1100px; margin: 0 auto; }
+    .ft-top { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(200,205,210,.06); margin-bottom: 2rem; }
+    .ft-brand { display: flex; align-items: center; gap: .875rem; margin-bottom: 1rem; }
+    .ft-logo { width: 46px; height: 46px; border-radius: 50%; background: conic-gradient(from 0deg, #1B3A5C, #3D9BE0, #1B3A5C); padding: 2px; flex-shrink: 0; }
+    .ft-logo-in { width: 100%; height: 100%; border-radius: 50%; background: #0d1117; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .ft-logo-in svg { width: 100%; height: 100%; border-radius: 50%; }
+    .ft-brand-txt { font-family: var(--font-h); font-size: 1rem; font-weight: 700; color: var(--white); letter-spacing: .03em; line-height: 1.2; }
+    .ft-brand-txt small { display: block; font-size: .6rem; font-weight: 400; letter-spacing: .12em; color: var(--blue-light); }
+    .ft-tag { font-size: .875rem; color: rgba(200,205,210,.5); line-height: 1.6; }
+    .ft-col-h { font-family: var(--font-h); font-size: .72rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--silver); margin-bottom: 1.25rem; }
+    .ft-contact { display: flex; align-items: flex-start; gap: .7rem; margin-bottom: .875rem; font-size: .875rem; color: rgba(200,205,210,.58); }
+    .ft-contact a { color: inherit; text-decoration: none; transition: color .2s ease; }
+    .ft-contact a:hover { color: var(--blue-light); }
+    .ft-contact a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .ft-social { display: flex; gap: .875rem; margin-top: .5rem; }
+    .ft-soc-a {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(200,205,210,.09);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--silver); text-decoration: none; font-size: 1rem;
+      transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s var(--ease-spring);
+    }
+    .ft-soc-a:hover { background: rgba(61,155,224,.1); border-color: rgba(61,155,224,.28); color: var(--blue-light); transform: translateY(-3px); }
+    .ft-soc-a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .ft-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: .78rem; color: rgba(200,205,210,.3); }
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 1024px) {
+      .builder { grid-template-columns: 1fr; }
+      .summary-panel { display: none; }
+      #mob-bar { display: block; }
+      #services { padding-bottom: 100px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-ham { display: flex; }
+      .trust-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .ft-top { grid-template-columns: 1fr; gap: 2rem; }
+      .stat-sep { display: none; }
+      .hero-logo-ring { width: 120px; height: 120px; }
+    }
+    @media (max-width: 480px) {
+      .svc-grid { grid-template-columns: 1fr; }
+      .svc-grid.addons { grid-template-columns: repeat(2,1fr); }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .frow { grid-template-columns: 1fr; }
+    }
+
+    /* Entry animations for hero */
+    @keyframes fade-up { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-anim-1 { animation: fade-up .8s var(--ease-out) .05s both; }
+    .hero-anim-2 { animation: fade-up .8s var(--ease-out) .18s both; }
+    .hero-anim-3 { animation: fade-up .8s var(--ease-out) .3s both; }
+    .hero-anim-4 { animation: fade-up .8s var(--ease-out) .45s both; }
+    .hero-anim-5 { animation: fade-up .8s var(--ease-out) .6s both; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════ -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+
+    <!-- Logo -->
+    <a href="#" class="nav-logo" aria-label="S & B Auto Detailing — Home">
+      <div class="nav-logo-badge">
+        <div class="nav-logo-inner"><img src="sb-logo.png" alt="S &amp; B Detailing logo" style="width:100%;height:100%;object-fit:contain;border-radius:50%;"></div>
+      </div>
+      <div class="nav-brand">S &amp; B Auto Detailing<small>Showroom shine, every time</small></div>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="nav-links" role="list">
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#services">Pricing</a></li>
+      <li><a href="#footer">Contact</a></li>
+    </ul>
+
+    <a href="#services" class="nav-cta">Book Now →</a>
+
+    <button class="nav-ham" id="navHam" aria-label="Open menu" aria-expanded="false" aria-controls="mob-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mob-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <a href="#why"      onclick="closeMenu()">Why Us</a>
+  <a href="#services" onclick="closeMenu()">Services &amp; Pricing</a>
+  <a href="#footer"   onclick="closeMenu()">Contact</a>
+  <a href="#services" onclick="closeMenu()" class="btn-p" style="font-size:1.1rem;padding:1rem 2.5rem;">Book Now →</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════ -->
+<section id="hero" aria-label="Hero">
+  <!-- Depth parallax layers -->
+  <div class="hero-depth-1" id="hDepth1" aria-hidden="true"></div>
+  <div class="hero-depth-2" id="hDepth2" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-a" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-b" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-c" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <!-- Logo badge -->
+    <div class="hero-logo-wrap hero-anim-1" aria-hidden="true">
+      <div class="hero-logo-ring">
+        <div class="hero-logo-face">
+          <img src="sb-logo.png" alt="S &amp; B Detailing logo" style="width:100%;height:100%;object-fit:contain;border-radius:50%;">
+        </div>
+      </div>
+    </div>
+
+    <div class="section-tag hero-anim-2">Mobile Auto Detailing</div>
+    <h1 class="hero-h1 hero-anim-3">Showroom Shine,<br><span class="grad">Every Time.</span></h1>
+    <p class="hero-sub hero-anim-4">Premium mobile detailing that comes to you. Hand-crafted results with professional-grade products — because your car deserves nothing less.</p>
+    <div class="hero-ctas hero-anim-5">
+      <a href="#services" class="btn-p">Build My Detail →</a>
+      <a href="#why"      class="btn-g">See Why We're Different</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator" aria-hidden="true">
+    <span>Scroll</span>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     WHY US
+════════════════════════════════════════════════════ -->
+<section id="why" aria-label="Why choose S & B">
+  <div class="hline" aria-hidden="true"></div>
+  <div class="why-inner">
+    <div class="why-header">
+      <div class="section-tag rv d1">Why S &amp; B</div>
+      <h2 class="section-h rv d2">We Do It Differently</h2>
+      <p class="section-p rv d3">Three reasons our clients keep coming back — and sending their friends.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card rv-3d d2" data-tilt>
+        <div class="trust-icon" aria-hidden="true">✨</div>
+        <h3 class="trust-h">Meticulous Attention</h3>
+        <p class="trust-p">We treat every vehicle like it's our own. No rushed jobs, no shortcuts — just thorough, hand-crafted detailing that shows in the finish.</p>
+      </div>
+      <div class="trust-card rv-3d d3" data-tilt>
+        <div class="trust-icon" aria-hidden="true">💎</div>
+        <h3 class="trust-h">Premium Products</h3>
+        <p class="trust-p">From ceramic spray coatings to professional steam extractors, we use the same tools the pros trust — not big-box shortcuts.</p>
+      </div>
+      <div class="trust-card rv-3d d4" data-tilt>
+        <div class="trust-icon" aria-hidden="true">🚐</div>
+        <h3 class="trust-h">We Come To You</h3>
+        <p class="trust-p">Mobile detailing at your home, office, or anywhere in between. No drive-arounds, no waiting rooms — just convenience and shine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     STATS
+════════════════════════════════════════════════════ -->
+<section id="stats" aria-label="Stats">
+  <div class="stats-inner">
+    <div class="stat-item rv-scale d1">
+      <div class="stat-num"><span data-count="100">0</span>+</div>
+      <div class="stat-lbl">Happy Clients</div>
+    </div>
+    <div class="stat-sep rv d2" aria-hidden="true"></div>
+    <div class="stat-item rv-scale d2">
+      <div class="stat-num">5<span style="font-size:.6em;">★</span></div>
+      <div class="stat-lbl">Average Rating</div>
+    </div>
+    <div class="stat-sep rv d3" aria-hidden="true"></div>
+    <div class="stat-item rv-scale d3">
+      <div class="stat-num"><span data-count="7">0</span> Services</div>
+      <div class="stat-lbl">Add-On Options</div>
+    </div>
+    <div class="stat-sep rv d4" aria-hidden="true"></div>
+    <div class="stat-item rv-scale d4">
+      <div class="stat-num">Mobile</div>
+      <div class="stat-lbl">We Come to You</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SERVICE BUILDER
+════════════════════════════════════════════════════ -->
+<section id="services" aria-label="Service Builder">
+  <div class="hline" aria-hidden="true"></div>
+  <div class="svc-header">
+    <div class="section-tag rv">Build Your Detail</div>
+    <h2 class="section-h rv d1">Pick What Your Car Needs</h2>
+    <p class="section-p rv d2">Select services below — the total updates live as you choose.</p>
+  </div>
+
+  <div class="builder">
+
+    <!-- ── SERVICE SELECTION ── -->
+    <div class="svc-col">
+
+      <!-- Pricing note -->
+      <div class="price-note rv" style="margin-bottom:1.5rem;">
+        <strong style="color:rgba(200,205,210,.8);">Pricing note:</strong> Prices vary by vehicle size — select your type below and all totals update automatically. Quoted prices are starting rates; heavily soiled vehicles may be adjusted before we begin.
+      </div>
+
+      <!-- Vehicle type selector -->
+      <div class="vtype-wrap rv d1">
+        <div class="vtype-lbl">Vehicle Type</div>
+        <div class="vtype-seg" role="radiogroup" aria-label="Select vehicle type">
+          <button class="vtype-btn active" data-type="sedan" onclick="updateVehicleType('sedan')" role="radio" aria-checked="true">Sedan</button>
+          <button class="vtype-btn" data-type="suv" onclick="updateVehicleType('suv')" role="radio" aria-checked="false">SUV</button>
+          <button class="vtype-btn" data-type="truck" onclick="updateVehicleType('truck')" role="radio" aria-checked="false">Minivan / Truck</button>
+        </div>
+      </div>
+
+      <!-- FULL DETAILS -->
+      <div class="svc-group rv d2">
+        <div class="svc-group-head">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4A843" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Full Details
+          <span class="badge-gold">COMPLETE PACKAGE</span>
+        </div>
+        <div class="svc-grid">
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Bronze Full Detail" data-price-sedan="140" data-price-suv="160" data-price-truck="180">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-protect">⏱ 1 Month</div>
+            <div class="svc-name">Bronze</div>
+            <div class="svc-desc">Basic Wash + PW &amp; Interior Wipedown + Vacuum</div>
+            <div class="svc-price">$140</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Silver Full Detail" data-price-sedan="170" data-price-suv="190" data-price-truck="210">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-protect">⏱ 1–2 Months</div>
+            <div class="svc-name">Silver</div>
+            <div class="svc-desc">Bronze + TEC582 &amp; Steam Cleaning + Light Extraction</div>
+            <div class="svc-price">$170</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Gold Full Detail" data-price-sedan="210" data-price-suv="230" data-price-truck="250">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-protect">⏱ 3–4 Months</div>
+            <div class="svc-name">Gold</div>
+            <div class="svc-desc">Silver + SOO3 &amp; TEC582 + Full Steam, Extraction &amp; Stain Removal</div>
+            <div class="svc-price">$210</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Platinum Full Detail" data-price-sedan="260" data-price-suv="280" data-price-truck="300">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-protect">⏱ 5–6 Months</div>
+            <div class="svc-name">Platinum</div>
+            <div class="svc-desc">Gold + Deep Stain Removal &amp; Clay Bar Decontamination</div>
+            <div class="svc-price">$260</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXTERIOR -->
+      <div class="svc-group rv d3">
+        <div class="svc-group-head">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3D9BE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8l4 4-4 4"/></svg>
+          Exterior
+        </div>
+        <div class="svc-grid">
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Bronze Exterior" data-price-sedan="70" data-price-suv="85" data-price-truck="100">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-protect">⏱ 1 Month</div>
+            <div class="svc-name">Bronze</div>
+            <div class="svc-desc">Basic Wash &amp; Wheels + Protector Wax</div>
+            <div class="svc-price">$70</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Silver Exterior" data-price-sedan="90" data-price-suv="105" data-price-truck="120">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-protect">⏱ 1–2 Months</div>
+            <div class="svc-name">Silver</div>
+            <div class="svc-desc">Bronze + Ceramic Sealant</div>
+            <div class="svc-price">$90</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Gold Exterior" data-price-sedan="110" data-price-suv="125" data-price-truck="140">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-protect">⏱ 3–4 Months</div>
+            <div class="svc-name">Gold</div>
+            <div class="svc-desc">Silver + Enhanced 2-Step Ceramic Sealant &amp; Water Spot Removal</div>
+            <div class="svc-price">$110</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Platinum Exterior" data-price-sedan="140" data-price-suv="155" data-price-truck="170">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-protect">⏱ 5–6 Months</div>
+            <div class="svc-name">Platinum</div>
+            <div class="svc-desc">Gold + Paint Decontamination</div>
+            <div class="svc-price">$140</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERIOR -->
+      <div class="svc-group rv d4">
+        <div class="svc-group-head">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3D9BE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+          Interior
+        </div>
+        <div class="svc-grid">
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Bronze Interior" data-price-sedan="90" data-price-suv="110" data-price-truck="130">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-name">Bronze</div>
+            <div class="svc-desc">Light Vacuum &amp; Interior Cleaning/Wipedown</div>
+            <div class="svc-price">$90</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Silver Interior" data-price-sedan="110" data-price-suv="130" data-price-truck="150">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-name">Silver</div>
+            <div class="svc-desc">Bronze + Steam Cleaning &amp; Light Extraction/Stain Removal</div>
+            <div class="svc-price">$110</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Gold Interior" data-price-sedan="150" data-price-suv="170" data-price-truck="190">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-name">Gold</div>
+            <div class="svc-desc">Silver + Full Steam Cleaning, Detailed Stain Removal &amp; Leather Conditioner</div>
+            <div class="svc-price">$150</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Platinum Interior" data-price-sedan="180" data-price-suv="200" data-price-truck="220">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-name">Platinum</div>
+            <div class="svc-desc">Gold + Odor/Pet Hair Removal <em style="font-size:.68rem;color:rgba(200,205,210,.5);">(may add cost based on condition)</em></div>
+            <div class="svc-price">$180</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADD-ONS -->
+      <div class="svc-group rv d5">
+        <div class="svc-group-head">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3D9BE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          Add-Ons
+        </div>
+        <div class="svc-grid addons">
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Pet Hair Removal" data-price-min="30" data-price-display="$30–60">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-name">Pet Hair Removal</div>
+            <div class="svc-desc">Thorough pet hair extraction</div>
+            <div class="svc-price">$30–60</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Bug / Water Spot Removal" data-price-min="30" data-price-display="$30–50">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-name">Bug / Water Spots</div>
+            <div class="svc-desc">Bug removal &amp; water spot treatment</div>
+            <div class="svc-price">$30–50</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Odor Removal" data-price-min="30" data-price-display="$30–60">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-name">Odor Removal</div>
+            <div class="svc-desc">Deep odor elimination treatment</div>
+            <div class="svc-price">$30–60</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Excessive Stain Removal" data-price-min="40" data-price-display="$40–80">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-name">Excessive Stain</div>
+            <div class="svc-desc">Targeted heavy stain extraction</div>
+            <div class="svc-price">$40–80</div>
+          </div>
+          <div class="svc-card" role="checkbox" aria-checked="false" tabindex="0" data-name="Ceramic Protection Boost (TEC582)" data-price-min="40" data-price-display="$40">
+            <div class="svc-check" aria-hidden="true"><span class="svc-tick">✓</span></div>
+            <div class="svc-name">Ceramic Boost</div>
+            <div class="svc-desc">TEC582 ceramic protection boost</div>
+            <div class="svc-price">$40</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /svc-col -->
+
+
+    <!-- ── DESKTOP STICKY SUMMARY + FORM ── -->
+    <aside class="summary-panel rv-r d2" aria-label="Order summary">
+      <div class="sm-title">Your Selection</div>
+
+      <div class="sm-items" id="smItems" role="list" aria-live="polite" aria-label="Selected services">
+        <div class="sm-empty" id="smEmpty">No services selected yet.</div>
+      </div>
+
+      <div class="sm-divider" aria-hidden="true"></div>
+
+      <div class="sm-total-row">
+        <span class="sm-total-lbl">Estimated Total</span>
+        <span class="sm-total-amt"><span class="sym">$</span><span id="dTotal">0</span></span>
+      </div>
+
+      <div class="price-note">Prices are starting rates and may vary by vehicle size and condition.</div>
+
+      <!-- Desktop form -->
+      <div id="dForm">
+        <div class="form-title">Your Info</div>
+
+        <div class="fg">
+          <label class="fl" for="dName">Full Name *</label>
+          <input class="fi" type="text" id="dName" placeholder="Jane Smith" autocomplete="name">
+        </div>
+        <div class="frow">
+          <div class="fg">
+            <label class="fl" for="dPhone">Phone *</label>
+            <input class="fi" type="tel" id="dPhone" placeholder="(555) 123-4567" autocomplete="tel">
+          </div>
+          <div class="fg">
+            <label class="fl" for="dEmail">Email</label>
+            <input class="fi" type="email" id="dEmail" placeholder="you@email.com" autocomplete="email">
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl" for="dVehicle">Vehicle</label>
+          <input class="fi" type="text" id="dVehicle" placeholder="2021 Honda Accord">
+        </div>
+        <div class="frow">
+          <div class="fg">
+            <label class="fl" for="dDate">Preferred Date *</label>
+            <input class="fi" type="date" id="dDate" onchange="onDateChange('d')">
+          </div>
+          <div class="fg">
+            <label class="fl" for="dTime">Time *</label>
+            <select class="fi" id="dTime" disabled aria-label="Select a time">
+              <option value="">— pick a date first —</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl" for="dLoc">Service Location</label>
+          <input class="fi" type="text" id="dLoc" placeholder="Your home or office address" autocomplete="street-address">
+        </div>
+        <div class="fg">
+          <label class="fl" for="dNotes">Notes (optional)</label>
+          <textarea class="fta" id="dNotes" placeholder="Anything specific we should know?"></textarea>
+        </div>
+
+        <div class="f-err" id="dErr"></div>
+        <button class="btn-submit" id="dSubmit" onclick="submitForm('d')">Send My Request →</button>
+        <p class="f-hint">This sends a request — we'll text you to confirm a time. Not an instant booking.</p>
+      </div>
+
+      <div class="success-wrap" id="dSuccess">
+        <div class="success-icon">✅</div>
+        <h3>Request Sent!</h3>
+        <p>Thanks! We've got your request and will text you to confirm a time. We can't wait to make your ride shine.</p>
+        <button onclick="resetForm('d')" class="btn-g" style="margin-top:1.25rem;width:100%;justify-content:center;">Submit Another →</button>
+      </div>
+    </aside>
+
+  </div><!-- /builder -->
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     MOBILE STICKY BAR
+════════════════════════════════════════════════════ -->
+<div id="mob-bar" aria-label="Mobile order summary">
+  <div class="mob-bar-row" onclick="toggleMobBar()" role="button" tabindex="0" aria-expanded="false" aria-controls="mob-panel" onkeydown="if(event.key==='Enter'||event.key===' ')toggleMobBar()">
+    <div class="mob-bar-left">
+      <div class="mob-bar-lbl">Your Selections</div>
+      <div class="mob-bar-cnt" id="mCnt">0 services selected</div>
+    </div>
+    <div class="mob-bar-tot">$<span id="mTotal">0</span></div>
+    <div class="mob-bar-chevron" aria-hidden="true">▲</div>
+  </div>
+  <div class="mob-panel" id="mob-panel" aria-hidden="true">
+    <div class="mob-panel-inner">
+      <div id="mItems" style="margin-bottom:1.1rem;" role="list" aria-live="polite">
+        <div style="font-size:.82rem;color:rgba(200,205,210,.4);font-style:italic;text-align:center;padding:.75rem 0;">No services selected yet.</div>
+      </div>
+
+      <!-- Mobile form -->
+      <div id="mForm">
+        <div class="form-title">Your Info</div>
+        <div class="fg"><label class="fl" for="mName">Full Name *</label><input class="fi" type="text" id="mName" placeholder="Jane Smith"></div>
+        <div class="fg"><label class="fl" for="mPhone">Phone *</label><input class="fi" type="tel" id="mPhone" placeholder="(555) 123-4567"></div>
+        <div class="fg"><label class="fl" for="mEmail">Email</label><input class="fi" type="email" id="mEmail" placeholder="you@email.com"></div>
+        <div class="fg"><label class="fl" for="mVehicle">Vehicle</label><input class="fi" type="text" id="mVehicle" placeholder="2021 Honda Accord"></div>
+        <div class="frow">
+          <div class="fg"><label class="fl" for="mDate">Date *</label><input class="fi" type="date" id="mDate" onchange="onDateChange('m')"></div>
+          <div class="fg"><label class="fl" for="mTime">Time *</label><select class="fi" id="mTime" disabled aria-label="Select a time"><option value="">— pick date first —</option></select></div>
+        </div>
+        <div class="fg"><label class="fl" for="mLoc">Service Location</label><input class="fi" type="text" id="mLoc" placeholder="Your address"></div>
+        <div class="fg"><label class="fl" for="mNotes">Notes</label><textarea class="fta" id="mNotes" placeholder="Anything specific?"></textarea></div>
+        <div class="f-err" id="mErr"></div>
+        <button class="btn-submit" id="mSubmit" onclick="submitForm('m')">Send My Request →</button>
+        <p class="f-hint">This sends a request — we'll text you to confirm a time.</p>
+      </div>
+      <div class="success-wrap" id="mSuccess">
+        <div class="success-icon">✅</div>
+        <h3>Request Sent!</h3>
+        <p>We'll text you shortly to confirm a time.</p>
+        <button onclick="resetForm('m')" class="btn-g" style="margin-top:1rem;width:100%;justify-content:center;">Submit Another →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="hline" aria-hidden="true"></div>
+  <div class="ft-inner">
+    <div class="ft-top">
+      <!-- Brand -->
+      <div>
+        <div class="ft-brand">
+          <div class="ft-logo">
+            <div class="ft-logo-in">
+              <img src="sb-logo.png" alt="S &amp; B Detailing logo" style="width:100%;height:100%;object-fit:contain;border-radius:50%;">
+            </div>
+          </div>
+          <div class="ft-brand-txt">S &amp; B Auto Detailing<small>Showroom Shine, Every Time</small></div>
+        </div>
+        <p class="ft-tag">Professional mobile auto detailing brought directly to you. We handle the shine — you enjoy the ride.</p>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <div class="ft-col-h">Contact</div>
+        <div class="ft-contact">
+          <span aria-hidden="true">📞</span>
+          <a href="tel:6367510845">(636) 751-0845</a>
+        </div>
+        <div class="ft-contact">
+          <span aria-hidden="true">✉️</span>
+          <div>
+            <a href="mailto:sakethtadakamalla@gmail.com">sakethtadakamalla@gmail.com</a><br>
+            <a href="mailto:bchen9996@gmail.com">bchen9996@gmail.com</a>
+          </div>
+        </div>
+        <div class="ft-contact">
+          <span aria-hidden="true">📍</span>
+          <span>Mobile Service — We Come To You</span>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div>
+        <div class="ft-col-h">Follow Us</div>
+        <div class="ft-social">
+          <a href="#" class="ft-soc-a" aria-label="Instagram">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="ft-soc-a" aria-label="Facebook">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="ft-soc-a" aria-label="TikTok">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </a>
+        </div>
+        <div style="margin-top:1.5rem;">
+          <a href="#services" class="btn-p" style="font-size:.88rem;padding:.7rem 1.4rem;">Book a Detail →</a>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2025 S &amp; B Auto Detailing. All rights reserved.</span>
+      <span>Showroom Shine, Every Time.</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════ -->
+<script>
+/* ── CONFIG ── */
+const APPS_URL = 'https://script.google.com/macros/s/AKfycbwbbt26lh_RGkfZn0QIp0Qd2FW9PT8TPwF6uI0np3A8SUVGGsshHBY_nWonOEPHwlb4/exec';
+
+/* ── STATE ── */
+const selected = new Map(); // name → price
+
+/* ── NAV: scroll glass ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('stuck', window.scrollY > 40);
+}, { passive: true });
+
+/* ── NAV: mobile hamburger ── */
+const ham     = document.getElementById('navHam');
+const mobMenu = document.getElementById('mob-menu');
+ham.addEventListener('click', () => {
+  const open = ham.classList.toggle('open');
+  ham.setAttribute('aria-expanded', open);
+  mobMenu.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+function closeMenu() {
+  ham.classList.remove('open');
+  ham.setAttribute('aria-expanded', 'false');
+  mobMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── PARALLAX ── */
+const d1 = document.getElementById('hDepth1');
+const d2 = document.getElementById('hDepth2');
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    const y = window.scrollY;
+    if (d1) d1.style.transform = `translateY(${y * 0.42}px)`;
+    if (d2) d2.style.transform = `translateY(${y * 0.18}px)`;
+    ticking = false;
+  });
+}, { passive: true });
+
+/* ── SCROLL REVEAL ── */
+const revEls = document.querySelectorAll('.rv, .rv-l, .rv-r, .rv-3d, .rv-scale');
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('on');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+revEls.forEach(el => revObs.observe(el));
+
+/* ── NUMBER COUNTERS ── */
+function animateCount(el, target, duration = 1400) {
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const target = parseInt(e.target.dataset.count, 10);
+      animateCount(e.target, target);
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+/* ── 3D CARD TILT ── */
+document.querySelectorAll('[data-tilt]').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform = `perspective(600px) rotateY(${x * 14}deg) rotateX(${-y * 14}deg) translateZ(8px)`;
+    card.style.boxShadow = `${-x * 12}px ${-y * 12}px 30px rgba(61,155,224,.15)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.boxShadow = '';
+  });
+});
+
+/* Service card mouse tilt */
+document.querySelectorAll('.svc-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    if (card.classList.contains('active')) return;
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform = `perspective(450px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateZ(4px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    if (!card.classList.contains('active')) card.style.transform = '';
+  });
+});
+
+/* ── VEHICLE TYPE ── */
+let vehicleType = 'sedan';
+
+function getCardPrice(card) {
+  if (card.dataset.priceMin !== undefined) {
+    return parseInt(card.dataset.priceMin, 10); // add-on with range
+  }
+  const key = 'price' + vehicleType.charAt(0).toUpperCase() + vehicleType.slice(1);
+  return parseInt(card.dataset[key], 10);
+}
+
+function getCardDisplayPrice(card) {
+  if (card.dataset.priceDisplay) return card.dataset.priceDisplay;
+  return '$' + getCardPrice(card);
+}
+
+function updateVehicleType(type) {
+  vehicleType = type;
+  document.querySelectorAll('.vtype-btn').forEach(btn => {
+    const on = btn.dataset.type === type;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-checked', on);
+  });
+  // Re-price all tiered cards
+  document.querySelectorAll('.svc-card[data-price-sedan]').forEach(card => {
+    const priceEl = card.querySelector('.svc-price');
+    if (priceEl) priceEl.textContent = '$' + getCardPrice(card);
+    if (card.classList.contains('active')) {
+      selected.set(card.dataset.name, getCardPrice(card));
+    }
+  });
+  updateSummary();
+}
+
+/* ── SERVICE SELECTION ── */
+document.querySelectorAll('.svc-card').forEach(card => {
+  function toggle() {
+    const name  = card.dataset.name;
+    const price = getCardPrice(card);
+    const now   = card.classList.toggle('active');
+    card.setAttribute('aria-checked', now);
+    if (now) { selected.set(name, price); } else { selected.delete(name); }
+    updateSummary();
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+});
+
+function updateSummary() {
+  const total = [...selected.values()].reduce((a, b) => a + b, 0);
+  const count = selected.size;
+  const hasRange = [...selected.keys()].some(n => {
+    const c = document.querySelector(`.svc-card[data-name="${CSS.escape(n)}"]`);
+    return c && c.dataset.priceDisplay && c.dataset.priceDisplay.includes('–');
+  });
+
+  /* desktop */
+  const smItems = document.getElementById('smItems');
+  smItems.innerHTML = count === 0
+    ? '<div class="sm-empty">No services selected yet.</div>'
+    : [...selected.entries()].map(([n, p]) => {
+        const c = document.querySelector(`.svc-card[data-name="${CSS.escape(n)}"]`);
+        const disp = (c && c.dataset.priceDisplay) ? c.dataset.priceDisplay : `$${p}`;
+        return `<div class="sm-item" role="listitem"><span class="sm-item-name">${n}</span><span class="sm-item-price">${disp}</span></div>`;
+      }).join('');
+
+  const totalTxt = hasRange ? `${total}+` : `${total}`;
+  document.getElementById('dTotal').textContent = totalTxt;
+
+  /* mobile bar */
+  document.getElementById('mTotal').textContent = totalTxt;
+  document.getElementById('mCnt').textContent = `${count} service${count !== 1 ? 's' : ''} selected`;
+  const mItems = document.getElementById('mItems');
+  mItems.innerHTML = count === 0
+    ? '<div style="font-size:.82rem;color:rgba(200,205,210,.4);font-style:italic;text-align:center;padding:.75rem 0;">No services selected yet.</div>'
+    : [...selected.entries()].map(([n, p]) => {
+        const c = document.querySelector(`.svc-card[data-name="${CSS.escape(n)}"]`);
+        const disp = (c && c.dataset.priceDisplay) ? c.dataset.priceDisplay : `$${p}`;
+        return `<div class="sm-item" role="listitem"><span class="sm-item-name">${n}</span><span class="sm-item-price">${disp}</span></div>`;
+      }).join('');
+}
+
+/* ── DATE / TIME ── */
+const SLOTS = {
+  weekday: ['5:00 PM','6:00 PM','7:00 PM','8:00 PM'],
+  weekend: ['11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM']
+};
+
+(function initDatePickers() {
+  const today = new Date().toISOString().split('T')[0];
+  ['dDate','mDate'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.min = today;
+  });
+})();
+
+function onDateChange(prefix) {
+  const dateEl = document.getElementById(`${prefix}Date`);
+  const timeEl = document.getElementById(`${prefix}Time`);
+  const val    = dateEl.value;
+
+  timeEl.innerHTML = '';
+  if (!val) {
+    timeEl.innerHTML = '<option value="">— pick a date first —</option>';
+    timeEl.disabled = true;
+    return;
+  }
+
+  // Use noon to avoid DST edge cases
+  const dow   = new Date(val + 'T12:00:00').getDay(); // 0=Sun, 6=Sat
+  const slots = (dow === 0 || dow === 6) ? SLOTS.weekend : SLOTS.weekday;
+  const placeholder = document.createElement('option');
+  placeholder.value = ''; placeholder.textContent = '— select a time —';
+  timeEl.appendChild(placeholder);
+  slots.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s; opt.textContent = s;
+    timeEl.appendChild(opt);
+  });
+  timeEl.disabled = false;
+}
+
+function formatDateForSubmit(prefix) {
+  const dateVal = document.getElementById(`${prefix}Date`).value;
+  const timeVal = document.getElementById(`${prefix}Time`).value;
+  if (!dateVal || !timeVal) return '';
+  const d = new Date(dateVal + 'T12:00:00');
+  const dayStr = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  return `${dayStr} — ${timeVal}`;
+}
+
+/* ── MOBILE PANEL TOGGLE ── */
+const mobBar = document.getElementById('mob-bar');
+function toggleMobBar() {
+  const open = mobBar.classList.toggle('open');
+  const panel = document.getElementById('mob-panel');
+  panel.setAttribute('aria-hidden', !open);
+  mobBar.querySelector('.mob-bar-row').setAttribute('aria-expanded', open);
+}
+
+/* ── FORM SUBMIT ── */
+function submitForm(prefix) {
+  const p   = prefix;
+  const err = document.getElementById(`${p}Err`);
+  const btn = document.getElementById(`${p}Submit`);
+
+  const name  = document.getElementById(`${p}Name`).value.trim();
+  const phone = document.getElementById(`${p}Phone`).value.trim();
+  const date  = document.getElementById(`${p}Date`).value;
+  const time  = document.getElementById(`${p}Time`).value;
+
+  if (!name)          { showErr(err, 'Please enter your full name.');        return; }
+  if (!phone)         { showErr(err, 'Please enter your phone number.');     return; }
+  if (selected.size === 0) { showErr(err, 'Please select at least one service.'); return; }
+  if (!date)          { showErr(err, 'Please select a preferred date.');     return; }
+  if (!time)          { showErr(err, 'Please select a preferred time.');     return; }
+  err.style.display = 'none';
+
+  btn.disabled    = true;
+  btn.textContent = 'Sending…';
+
+  const formattedDate = formatDateForSubmit(p);
+  const total = [...selected.values()].reduce((a, b) => a + b, 0);
+
+  const payload = {
+    name,
+    phone,
+    email:    document.getElementById(`${p}Email`).value,
+    vehicle:  document.getElementById(`${p}Vehicle`).value,
+    date:     formattedDate,
+    location: document.getElementById(`${p}Loc`).value,
+    notes:    document.getElementById(`${p}Notes`).value,
+    services: [...selected.keys()].join(', '),
+    total:    '$' + total + (selected.size && [...selected.keys()].some(n => { const c = document.querySelector(`.svc-card[data-name="${CSS.escape(n)}"]`); return c && c.dataset.priceDisplay && c.dataset.priceDisplay.includes('–'); }) ? '+' : ''),
+  };
+
+  fetch(APPS_URL, {
+    method:  'POST',
+    mode:    'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify(payload),
+  })
+  .then(showSuccess)
+  .catch(showSuccess);
+
+  function showSuccess() {
+    document.getElementById(`${p}Form`).style.display = 'none';
+    document.getElementById(`${p}Success`).classList.add('show');
+  }
+}
+
+function showErr(el, msg) {
+  el.textContent   = msg;
+  el.style.display = 'block';
+}
+
+function resetForm(prefix) {
+  const p = prefix;
+  document.getElementById(`${p}Form`).style.display = '';
+  document.getElementById(`${p}Success`).classList.remove('show');
+  document.getElementById(`${p}Submit`).disabled    = false;
+  document.getElementById(`${p}Submit`).textContent = 'Send My Request →';
+  ['Name','Phone','Email','Vehicle','Loc','Notes'].forEach(f => {
+    const el = document.getElementById(`${p}${f}`);
+    if (el) el.value = '';
+  });
+  // Reset date/time
+  const dateEl = document.getElementById(`${p}Date`);
+  const timeEl = document.getElementById(`${p}Time`);
+  if (dateEl) dateEl.value = '';
+  if (timeEl) { timeEl.innerHTML = '<option value="">— pick a date first —</option>'; timeEl.disabled = true; }
+  // Deselect all service cards
+  document.querySelectorAll('.svc-card.active').forEach(c => {
+    c.classList.remove('active');
+    c.setAttribute('aria-checked', 'false');
+    c.style.transform = '';
+  });
+  selected.clear();
+  updateSummary();
+}
+</script>
+</body>
+</html>
